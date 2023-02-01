@@ -5,7 +5,88 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+//   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+// }
+
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+//TODO  
+// model Pet {
+//   id Int @id  @default(autoincrement())
+//   name String
+//   raza String
+//   solicitudes Solicitud []
+// }
+
+//TODO
+// model Solicitud {
+//   id Int @id @default(autoincrement())
+//   description String
+//   telefono String
+//   dni String
+//   solicitud PetAdopt @relation(fields: [solicitudId], references: [id])
+//   solicitudId Int
+// }
+ 
+
+model Profile {
+  id      String     @id
+  email   String     @unique
+  name    String?  
+  
+  // Relación Perfil-Usuario
+  user     Usuario?  
+  userId   Int?      @unique
+
+}
+
+
+
+model Usuario {
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  name        String?  
+  role        String  @default("User")
+  
+  // Relación Perfil-Usuario
+  profile     Profile?  @relation(fields: [profileId], references: [id])
+  profileId   String?  @unique
+
+  // Relacion Usuario-Pet
+  pet    Pet[]
+}
+
+
+model Pet {
+  id           Int       @id @default(autoincrement())
+  name         String
+  breed        String? 
+  age          Int
+  numberChip   String?  
+  category     String
+
+  // Relacion Pet-Diagnostico
+  diagnostic   Diagnostic[]  
+  
+  // Relacion Usuario-Pet
+  owner        Usuario?   @relation(fields:[ownerId], references: [id])
+  ownerId Int  
+}
+
+
+model Diagnostic {
+  id            Int     @id @default(autoincrement())  
+  symptoms      String
+  medication    String
+  created_at    DateTime
+
+  // Relacion Pet-Diagnostico
+  pet        Pet  @relation(fields:[petId], references: [id])
+  petId      Int
 }
