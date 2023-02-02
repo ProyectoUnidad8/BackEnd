@@ -81,3 +81,53 @@ export const updatePet = async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ ok: false, message: error });
     }
   };
+
+  export const deletePet = async (req: Request, res: Response): Promise<void> => {
+
+    try {
+        const { id } = req.params;
+
+        const deletedPet = await prisma.pet.delete({
+            where: {
+                id: Number(id)
+            }
+        });
+
+        res.status(200).json({
+            ok: true,
+            message: "Mascota Eliminada",
+            data: deletedPet,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: error
+        })
+    }
+}
+
+
+export const findPetById = async (req: Request, res: Response): Promise<void> => {
+
+    try {
+        const { id } = req.params;
+
+        const pet = await prisma.pet.findFirst({
+            where: {
+                id: Number(id)
+            }
+        });
+
+        res.status(200).json({
+            ok: true,
+            message: pet
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: error
+        });
+    }
+};
