@@ -25,3 +25,59 @@ export const findUserPets = async (req: Request, res: Response): Promise<void> =
     }
 
 };
+
+export const findAllPet = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const pets = await prisma.pet.findMany();
+    
+    res.status(200).json({
+      ok: true,
+      data: pets,
+    });
+  } catch (error) {
+    res.status(500).json({ ok: false, message: error });
+  }
+};
+
+export const addPet = async (req: Request, res: Response): Promise<void> => {
+
+    try {
+      const data = req.body;
+
+      await prisma.pet.create({ data });
+  
+      res.status(201).json({ 
+        ok: true, 
+        message: "Pet añadida correctamente" 
+    });
+
+    } catch (error) {
+      res.status(500).json({ 
+        ok: false, 
+        message: error });
+    }
+    
+  };
+
+
+export const updatePet = async (req: Request, res: Response): Promise<void> => {
+  
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    
+    const pet = await prisma.pet.update({
+      where: { id: Number(id) },
+      data,
+    });
+    
+    res.status(200).json({
+          ok: true,
+          message: "Pet actualizado correctamente",
+          data: pet,
+        });
+
+    } catch (error) {
+        res.status(500).json({ ok: false, message: error });
+    }
+  };

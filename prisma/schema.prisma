@@ -67,16 +67,16 @@ model Pet {
   id           Int       @id @default(autoincrement())
   name         String
   breed        String? 
-  age          Int
+  age          Int?
   numberChip   String?  
-  category     String
+  category     String?
 
   // Relacion Pet-Diagnostico
   diagnostic   Diagnostic[]  
   
   // Relacion Usuario-Pet
   owner        Usuario?   @relation(fields:[ownerId], references: [id])
-  ownerId Int  
+  ownerId Int?  
 }
 
 
