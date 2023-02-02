@@ -68,9 +68,8 @@ model Pet {
   name         String
   breed        String? 
   age          Int
-  numberChip   String?  
+  numberChip   String? 
   category     String
-
   // Relacion Pet-Diagnostico
   diagnostic   Diagnostic[]  
   
