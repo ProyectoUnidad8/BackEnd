@@ -3,9 +3,11 @@ import * as controllerPet from "./controller";
 
 const petRouter : Router = Router();
 
-petRouter.get("/", controllerPet.findUserPets);
-petRouter.post("/add", controllerPet.addPet);
-petRouter.post("/:id", controllerPet.updatePet);
-petRouter.get("/all", controllerPet.findAllPet);
+petRouter.get("/", controllerPet.findAllPet);
+petRouter.post("/", controllerPet.addPet);
+petRouter.get("/:id",controllerPet.findPetById);
+petRouter.get("/user-pet/:id", controllerPet.findUserPets);
+petRouter.put("/:id", controllerPet.updatePet);
+petRouter.delete("/:id",controllerPet.deletePet);
 
 export default petRouter;
