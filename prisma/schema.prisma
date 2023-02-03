@@ -51,6 +51,7 @@ model Profile {
 model Usuario {
   id          Int     @id @default(autoincrement())
   email       String  @unique
+  password    String  @default("123456")
   name        String?  
   role        String  @default("User")
   
@@ -74,7 +75,7 @@ model Pet {
   diagnostic   Diagnostic[]  
   
   // Relacion Usuario-Pet
-  owner        Usuario?   @relation(fields:[ownerId], references: [id])
+  owner        Usuario?   @relation(fields:[ownerId], references: [id], onDelete: Cascade)
   ownerId Int  
 }
 

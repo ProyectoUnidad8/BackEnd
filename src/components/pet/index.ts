@@ -1,13 +1,14 @@
 import { Router } from "express";
 import * as controllerPet from "./controller";
+import { validateAuthorization } from "../../middleware";
 
 const petRouter : Router = Router();
 
-petRouter.get("/", controllerPet.findAllPet);
-petRouter.post("/", controllerPet.addPet);
-petRouter.get("/:id",controllerPet.findPetById);
-petRouter.get("/user-pet/:id", controllerPet.findUserPets);
-petRouter.put("/:id", controllerPet.updatePet);
-petRouter.delete("/:id",controllerPet.deletePet);
+petRouter.get("/", validateAuthorization, controllerPet.findAllPet);
+petRouter.post("/",validateAuthorization, controllerPet.addPet);
+petRouter.get("/:id", validateAuthorization, controllerPet.findPetById);
+petRouter.get("/user-pet/:id", validateAuthorization, controllerPet.findUserPets);
+petRouter.put("/:id", validateAuthorization, controllerPet.updatePet);
+petRouter.delete("/:id", validateAuthorization, controllerPet.deletePet);
 
 export default petRouter;
