@@ -41,3 +41,30 @@ export const findOne = async (req: Request, res: Response): Promise<void> => {
     })
   }
 };
+
+export const store = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const {name, breed, isAdopted} = req.body;
+
+    const result = await prisma.petAdoption.create({
+      data:{
+        name,
+        breed,
+        isAdopted
+      }
+    });
+
+    res.status(201).json({
+      ok: true,
+      message:"Mascota añadida para adopción",
+      data: result
+    })
+
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      message: error
+    });
+  }
+};
+
