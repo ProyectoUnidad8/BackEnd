@@ -73,7 +73,7 @@ export const updatePetToAdopt = async (req: Request, res: Response): Promise<voi
     const {id} = req.params;
     const {name, breed, isAdopted} = req.body;
 
-    const resutl = await prisma.petAdoption.update({
+    const result = await prisma.petAdoption.update({
       where:{
         id: Number(id)
       },
@@ -89,5 +89,28 @@ export const updatePetToAdopt = async (req: Request, res: Response): Promise<voi
       ok: false,
       message: error
     });
+  }
+};
+
+export const deletePetToAdopt = async (req: Request, res: Response): Promise <void> => {
+  try {
+    const {id} = req.params;
+    
+    const result = await prisma.petAdoption.delete({
+      where: {
+        id: Number(id)
+      }
+    });
+
+    res.send(204).json({
+      ok: true,
+      message: "Mascota eliminada de la lista adopción."
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      ok:false,
+      message: error
+    })
   }
 };
