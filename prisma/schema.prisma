@@ -1,93 +1,99 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model PetAdoption {
-  id Int @id  @default(autoincrement())
-  name String
-  breed String
-  isAdopted  Boolean @default(false)
+  id           Int           @id @default(autoincrement())
+  name         String
+  breed        String?
+  age          Int?
+  gender       String
+  description  String?
+  category     String
+  url_image    String        @default("https://goo.su/crhQ")
+  isAdopted    Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  update_at    DateTime      @updatedAt
+
   applications Application[]
 }
 
 model Application {
-  id Int @id @default(autoincrement())
-  description String
-  phone String
-  dni String
-  status Boolean
-  application PetAdoption @relation(fields: [applicationId], references: [id])
-  applicationId Int
-}
- 
+  id            Int         @id @default(autoincrement())
+  name          String
+  description   String
+  phone         String
+  dni           String
+  status        Boolean
+  createdAt     DateTime    @default(now())
+  update_at     DateTime    @updatedAt
 
+  applicationId Int
+  application   PetAdoption @relation(fields: [applicationId], references: [id])
+}
 
 model Profile {
-  id      String     @id
-  email   String     @unique
-  name    String?  
-  
-  // Relación Perfil-Usuario
-  user     Usuario?  
-  userId   Int?      @unique
+  id         String   @id
+  email      String   @unique
+  name       String?
+  createdAt  DateTime @default(now())
+  update_at  DateTime @updatedAt
 
+  userId     Int?     @unique
+  user       Usuario?
+}
+
+model Usuario {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  password   String   @default("123456")
+  name       String?
+  createdAt  DateTime @default(now())
+  update_at  DateTime @updatedAt
+
+  role       Role     @default(USER)
+  pet        Pet[]
+  profileId  String?  @unique
+  profile    Profile? @relation(fields: [profileId], references: [id])
+}
+
+model Pet {
+  id          Int         @id @default(autoincrement())
+  name        String
+  breed       String?
+  age         Int?
+  gender      String
+  description String?
+  numberChip  String?
+  category    String
+  url_image   String      @default("https://goo.su/XQImvpd")
+  createdAt   DateTime    @default(now())
+  update_at   DateTime    @updatedAt
+
+  ownerId     Int
+  diagnostic  Diagnostic[]
+  owner       Usuario     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+}
+
+model Diagnostic {
+  id         Int      @id @default(autoincrement())
+  symptoms   String
+  medication String
+  createdAt  DateTime @default(now())
+  update_at  DateTime @updatedAt
+
+  petId      Int
+  pet        Pet      @relation(fields: [petId], references: [id])
 }
 
 enum Role {
   ADMIN
-  USER 
+  USER
   AUX
-}
-
-model Usuario {
-  id          Int     @id @default(autoincrement())
-  email       String  @unique
-  password    String  @default("123456")
-  name        String?  
-  role        Role    @default(USER)
-  
-  // Relación Perfil-Usuario
-  profile     Profile?  @relation(fields: [profileId], references: [id])
-  profileId   String?  @unique
-
-  // Relacion Usuario-Pet
-  pet         Pet[]
-}
-
-
-model Pet {
-  id           Int       @id @default(autoincrement())
-  name         String
-  breed        String? 
-  age          Int
-  numberChip   String? 
-  category     String
-  url_image    String   @default("https://img.freepik.com/vector-premium/perro-gracioso-dibujos-animados-hueso_29190-1660.jpg?w=2000")
-  // Relacion Pet-Diagnostico
-  diagnostic   Diagnostic[]  
-  
-  // Relacion Usuario-Pet
-  owner        Usuario?   @relation(fields:[ownerId], references: [id], onDelete: Cascade)
-  ownerId      Int  
-}
-
-
-model Diagnostic {
-  id            Int     @id @default(autoincrement())  
-  symptoms      String
-  medication    String
-  created_at    DateTime
-
-  // Relacion Pet-Diagnostico
-  pet           Pet  @relation(fields:[petId], references: [id])
-  petId         Int
 }

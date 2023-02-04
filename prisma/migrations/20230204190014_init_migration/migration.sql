@@ -5,8 +5,15 @@ CREATE TYPE "Role" AS ENUM ('ADMIN', 'USER', 'AUX');
 CREATE TABLE "PetAdoption" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "breed" TEXT NOT NULL,
+    "breed" TEXT,
+    "age" INTEGER,
+    "gender" TEXT NOT NULL,
+    "description" TEXT,
+    "category" TEXT NOT NULL,
+    "url_image" TEXT NOT NULL DEFAULT 'https://goo.su/crhQ',
     "isAdopted" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "update_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "PetAdoption_pkey" PRIMARY KEY ("id")
 );
@@ -14,10 +21,13 @@ CREATE TABLE "PetAdoption" (
 -- CreateTable
 CREATE TABLE "Application" (
     "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "dni" TEXT NOT NULL,
     "status" BOOLEAN NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "update_at" TIMESTAMP(3) NOT NULL,
     "applicationId" INTEGER NOT NULL,
 
     CONSTRAINT "Application_pkey" PRIMARY KEY ("id")
@@ -28,6 +38,8 @@ CREATE TABLE "Profile" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "update_at" TIMESTAMP(3) NOT NULL,
     "userId" INTEGER,
 
     CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
@@ -39,6 +51,8 @@ CREATE TABLE "Usuario" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL DEFAULT '123456',
     "name" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "update_at" TIMESTAMP(3) NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'USER',
     "profileId" TEXT,
 
@@ -50,10 +64,14 @@ CREATE TABLE "Pet" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "breed" TEXT,
-    "age" INTEGER NOT NULL,
+    "age" INTEGER,
+    "gender" TEXT NOT NULL,
+    "description" TEXT,
     "numberChip" TEXT,
     "category" TEXT NOT NULL,
-    "url_image" TEXT NOT NULL DEFAULT 'https://img.freepik.com/vector-premium/perro-gracioso-dibujos-animados-hueso_29190-1660.jpg?w=2000',
+    "url_image" TEXT NOT NULL DEFAULT 'https://goo.su/XQImvpd',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "update_at" TIMESTAMP(3) NOT NULL,
     "ownerId" INTEGER NOT NULL,
 
     CONSTRAINT "Pet_pkey" PRIMARY KEY ("id")
@@ -64,7 +82,8 @@ CREATE TABLE "Diagnostic" (
     "id" SERIAL NOT NULL,
     "symptoms" TEXT NOT NULL,
     "medication" TEXT NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "update_at" TIMESTAMP(3) NOT NULL,
     "petId" INTEGER NOT NULL,
 
     CONSTRAINT "Diagnostic_pkey" PRIMARY KEY ("id")
