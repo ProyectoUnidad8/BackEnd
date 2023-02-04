@@ -3,6 +3,7 @@ import * as Routers from "../components";
 const routes = [
 	["user", Routers.userRouter],
 	["pet", Routers.petRouter],
+	["pet-adoption", Routers.petAdoptionRouter],
 ];
 
 export const router = (app:any) => {
