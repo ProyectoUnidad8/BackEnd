@@ -84,6 +84,12 @@ export const updatePetToAdopt = async (req: Request, res: Response): Promise<voi
       }
     });
 
+    res.status(204).json({
+      ok:true,
+      message: "Mascota actualizada",
+      data:result
+    });
+
   } catch (error) {
     res.status(500).json({
       ok: false,
