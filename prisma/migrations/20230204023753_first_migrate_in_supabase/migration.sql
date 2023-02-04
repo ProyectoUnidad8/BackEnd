@@ -5,22 +5,22 @@ CREATE TYPE "Role" AS ENUM ('ADMIN', 'USER', 'AUX');
 CREATE TABLE "PetAdoption" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "raza" TEXT NOT NULL,
+    "breed" TEXT NOT NULL,
     "isAdopted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "PetAdoption_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Solicitud" (
+CREATE TABLE "Application" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
-    "telefono" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
     "dni" TEXT NOT NULL,
     "status" BOOLEAN NOT NULL,
-    "solicitudId" INTEGER NOT NULL,
+    "applicationId" INTEGER NOT NULL,
 
-    CONSTRAINT "Solicitud_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Application_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -83,7 +83,7 @@ CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
 CREATE UNIQUE INDEX "Usuario_profileId_key" ON "Usuario"("profileId");
 
 -- AddForeignKey
-ALTER TABLE "Solicitud" ADD CONSTRAINT "Solicitud_solicitudId_fkey" FOREIGN KEY ("solicitudId") REFERENCES "PetAdoption"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Application" ADD CONSTRAINT "Application_applicationId_fkey" FOREIGN KEY ("applicationId") REFERENCES "PetAdoption"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Usuario" ADD CONSTRAINT "Usuario_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE SET NULL ON UPDATE CASCADE;

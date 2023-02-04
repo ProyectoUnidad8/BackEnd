@@ -14,19 +14,19 @@ datasource db {
 model PetAdoption {
   id Int @id  @default(autoincrement())
   name String
-  raza String
+  breed String
   isAdopted  Boolean @default(false)
-  solicitudes Solicitud []
+  applications Application[]
 }
 
-model Solicitud {
+model Application {
   id Int @id @default(autoincrement())
   description String
-  telefono String
+  phone String
   dni String
   status Boolean
-  solicitud PetAdoption @relation(fields: [solicitudId], references: [id])
-  solicitudId Int
+  application PetAdoption @relation(fields: [applicationId], references: [id])
+  applicationId Int
 }
  
 
