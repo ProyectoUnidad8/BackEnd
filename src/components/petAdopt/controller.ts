@@ -2,7 +2,7 @@ import { type Request, Response } from "express";
 import prisma from "../../datasource";
 
 
-export const findAll = async (req: Request, res: Response): Promise<void> => {
+export const findAllPetToAdopt = async (req: Request, res: Response): Promise<void> => {
   try {
     const result = await prisma.petAdoption.findMany();
 
@@ -18,7 +18,7 @@ export const findAll = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const findOne = async (req: Request, res: Response): Promise<void> => {
+export const findOnePetToAdopt = async (req: Request, res: Response): Promise<void> => {
   try {
 
     const { id } = req.params;
@@ -42,12 +42,12 @@ export const findOne = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const store = async (req: Request, res: Response): Promise<void> => {
+export const storePetToAdopt = async (req: Request, res: Response): Promise<void> => {
   try {
-    const {name, breed, isAdopted} = req.body;
+    const { name, breed, isAdopted } = req.body;
 
     const result = await prisma.petAdoption.create({
-      data:{
+      data: {
         name,
         breed,
         isAdopted
@@ -56,7 +56,7 @@ export const store = async (req: Request, res: Response): Promise<void> => {
 
     res.status(201).json({
       ok: true,
-      message:"Mascota añadida para adopción",
+      message: "Mascota añadida para adopción",
       data: result
     })
 
@@ -68,3 +68,26 @@ export const store = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+export const updatePetToAdopt = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const {id} = req.params;
+    const {name, breed, isAdopted} = req.body;
+
+    const resutl = await prisma.petAdoption.update({
+      where:{
+        id: Number(id)
+      },
+      data:{
+        name,
+        breed,
+        isAdopted
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      message: error
+    });
+  }
+};
