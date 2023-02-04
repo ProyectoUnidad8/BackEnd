@@ -108,7 +108,7 @@ export const deletePetToAdopt = async (req: Request, res: Response): Promise <vo
       }
     });
 
-    res.send(204).json({
+    res.status(204).json({
       ok: true,
       message: "Mascota eliminada de la lista adopción."
     });
