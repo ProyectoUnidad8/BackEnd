@@ -5,35 +5,31 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-//   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
-// }
-
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-//TODO  
-// model Pet {
-//   id Int @id  @default(autoincrement())
-//   name String
-//   raza String
-//   solicitudes Solicitud []
-// }
+model PetAdoption {
+  id Int @id  @default(autoincrement())
+  name String
+  breed String
+  isAdopted  Boolean @default(false)
+  applications Application[]
+}
 
-//TODO
-// model Solicitud {
-//   id Int @id @default(autoincrement())
-//   description String
-//   telefono String
-//   dni String
-//   solicitud PetAdopt @relation(fields: [solicitudId], references: [id])
-//   solicitudId Int
-// }
+model Application {
+  id Int @id @default(autoincrement())
+  description String
+  phone String
+  dni String
+  status Boolean
+  application PetAdoption @relation(fields: [applicationId], references: [id])
+  applicationId Int
+}
  
+
 
 model Profile {
   id      String     @id
@@ -46,21 +42,25 @@ model Profile {
 
 }
 
-
+enum Role {
+  ADMIN
+  USER 
+  AUX
+}
 
 model Usuario {
   id          Int     @id @default(autoincrement())
   email       String  @unique
   password    String  @default("123456")
   name        String?  
-  role        String  @default("User")
+  role        Role    @default(USER)
   
   // Relación Perfil-Usuario
   profile     Profile?  @relation(fields: [profileId], references: [id])
   profileId   String?  @unique
 
   // Relacion Usuario-Pet
-  pet    Pet[]
+  pet         Pet[]
 }
 
 
@@ -71,12 +71,13 @@ model Pet {
   age          Int
   numberChip   String? 
   category     String
+  url_image    String   @default("https://img.freepik.com/vector-premium/perro-gracioso-dibujos-animados-hueso_29190-1660.jpg?w=2000")
   // Relacion Pet-Diagnostico
   diagnostic   Diagnostic[]  
   
   // Relacion Usuario-Pet
   owner        Usuario?   @relation(fields:[ownerId], references: [id], onDelete: Cascade)
-  ownerId Int  
+  ownerId      Int  
 }
 
 
@@ -87,6 +88,6 @@ model Diagnostic {
   created_at    DateTime
 
   // Relacion Pet-Diagnostico
-  pet        Pet  @relation(fields:[petId], references: [id])
-  petId      Int
+  pet           Pet  @relation(fields:[petId], references: [id])
+  petId         Int
 }
