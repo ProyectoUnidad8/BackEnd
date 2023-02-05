@@ -5,6 +5,7 @@ const routes = [
 	["pet", Routers.petRouter],
 	["pet-adoption", Routers.petAdoptionRouter],
 	["application", Routers.applicationRouter],
+	["pet-diagnostic", Routers.petDiagnosticRouter],
 ];
 
 export const router = (app:any) => {
