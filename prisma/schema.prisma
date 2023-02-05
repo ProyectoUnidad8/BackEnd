@@ -34,8 +34,8 @@ model Application {
   createdAt     DateTime    @default(now())
   update_at     DateTime    @updatedAt
 
-  applicationId Int
-  application   PetAdoption @relation(fields: [applicationId], references: [id])
+  petAdoptId Int
+  petAdopt   PetAdoption @relation(fields: [petAdoptId], references: [id])
 }
 
 model Profile {

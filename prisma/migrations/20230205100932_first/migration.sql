@@ -28,7 +28,7 @@ CREATE TABLE "Application" (
     "status" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update_at" TIMESTAMP(3) NOT NULL,
-    "applicationId" INTEGER NOT NULL,
+    "petAdoptId" INTEGER NOT NULL,
 
     CONSTRAINT "Application_pkey" PRIMARY KEY ("id")
 );
@@ -102,7 +102,7 @@ CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
 CREATE UNIQUE INDEX "Usuario_profileId_key" ON "Usuario"("profileId");
 
 -- AddForeignKey
-ALTER TABLE "Application" ADD CONSTRAINT "Application_applicationId_fkey" FOREIGN KEY ("applicationId") REFERENCES "PetAdoption"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Application" ADD CONSTRAINT "Application_petAdoptId_fkey" FOREIGN KEY ("petAdoptId") REFERENCES "PetAdoption"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Usuario" ADD CONSTRAINT "Usuario_profileId_fkey" FOREIGN KEY ("profileId") REFERENCES "Profile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
