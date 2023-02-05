@@ -30,7 +30,7 @@ model Application {
   description   String
   phone         String
   dni           String
-  status        Boolean
+  status        Boolean     @default(false)
   createdAt     DateTime    @default(now())
   update_at     DateTime    @updatedAt
 

@@ -25,7 +25,7 @@ CREATE TABLE "Application" (
     "description" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "dni" TEXT NOT NULL,
-    "status" BOOLEAN NOT NULL,
+    "status" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update_at" TIMESTAMP(3) NOT NULL,
     "applicationId" INTEGER NOT NULL,
