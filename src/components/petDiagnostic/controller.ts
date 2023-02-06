@@ -21,6 +21,29 @@ export const findOnePetDiagnostic = async (req:Request, res:Response):Promise<vo
     try {
         const { id } = req.params;
 
+        const data = await prisma.diagnostic.findFirst({
+            where: {
+                id: Number(id)
+            },
+            include: { pet: true }
+        });
+        res.status(200).json({
+            ok: true,
+            data: data
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: error
+        })
+    }
+};
+
+export const findAllByPetDiagnostic = async (req:Request, res:Response):Promise<void> => {
+    try {
+        const { id } = req.params;
+
         const data = await prisma.diagnostic.findMany({
             where: {
                 id: Number(id)
@@ -39,6 +62,7 @@ export const findOnePetDiagnostic = async (req:Request, res:Response):Promise<vo
         })
     }
 };
+
 
 export const storePetDiagnostic = async (req:Request, res:Response):Promise<void> => {
     try {
