@@ -89,7 +89,7 @@ export const login = async (req:Request, res: Response): Promise<void> => {
 	const { email, password } = req.body;
 	try {
 		if (!email || !password) {
-            res.send("Envío incorrecto de datos")
+				res.status(401).json({ message: "Envío incorrecto de datos" });
             return
         }
 
@@ -98,13 +98,13 @@ export const login = async (req:Request, res: Response): Promise<void> => {
         })
 
         if (!usuario) {
-            res.send("Usuario equivocado")
+				res.status(401).json({ message: "Usuario equivocado" });
             return
         }
 
         const isValid = await bcrypt.compare(password, usuario.password) && bcrypt.compare(email, usuario.email)
         if (!isValid) {
-            res.send("Password incorrecto")
+		  		res.status(401).json({ message: "Password incorrecto" });
             return
         }
 
@@ -112,10 +112,10 @@ export const login = async (req:Request, res: Response): Promise<void> => {
             { email, password }, 
             process.env.TOKEN_SECRET as Secret,
             {
-                expiresIn: "1h",
+                expiresIn: "2h",
             });
 
-        res.status(201).json({ email, token });
+        res.status(201).json({ usuario, token });
 
 	} catch (error) {
 		res.status(500).json({
