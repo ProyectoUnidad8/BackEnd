@@ -18,7 +18,7 @@ export function validateAuthorization(req: Request, res: Response, next: NextFun
 
 	const token = authorization.replace("Bearer ", "");
 
-	verify(token, process.env.TOKEN_SECRET as Secret, (err, decoded) => {
+	verify(token, process.env.TOKEN_SECRET as Secret, (err) => {
 		if (err) return res.status(401).json({
 			message: "Token Inválido"
 		});

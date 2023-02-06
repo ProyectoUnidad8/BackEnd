@@ -97,15 +97,17 @@ export const login = async (req:Request, res: Response): Promise<void> => {
             where: { email },
         })
 
+				const role = usuario?.role;
+
         if (!usuario) {
 				res.status(401).json({ message: "Usuario equivocado" });
-            return
+          return
         }
 
         const isValid = await bcrypt.compare(password, usuario.password) && bcrypt.compare(email, usuario.email)
         if (!isValid) {
-		  		res.status(401).json({ message: "Password incorrecto" });
-            return
+				res.status(401).json({ message: "Password incorrecto" });
+          return
         }
 
         const token = jwt.sign(
@@ -115,12 +117,12 @@ export const login = async (req:Request, res: Response): Promise<void> => {
                 expiresIn: "2h",
             });
 
-        res.status(201).json({ usuario, token });
+        res.status(201).json({ email, role, token });
 
 	} catch (error) {
 		res.status(500).json({
 			ok: false,
 			message: "Logeo incorrecto"
-	  });
+		});
 	}
 }

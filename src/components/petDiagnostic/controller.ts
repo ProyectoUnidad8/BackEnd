@@ -89,7 +89,7 @@ export const deletePetDiagnostic = async (req:Request, res:Response):Promise<voi
     try {
         const { id } = req.params;
 
-        const result = await prisma.diagnostic.delete({
+        await prisma.diagnostic.delete({
             where: {
                 id: Number(id)
             }
