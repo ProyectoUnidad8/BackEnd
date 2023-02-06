@@ -98,7 +98,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 		})
 
 		const role = usuario?.role;
-		const id = usuario?.role;
+		const id = usuario?.id;
 
 		if (!usuario) {
 			res.status(401).json({ message: "Usuario equivocado" });
