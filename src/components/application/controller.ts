@@ -1,4 +1,4 @@
-import { type Request, Response, response } from "express"; 
+import { type Request, Response } from "express"; 
 import prisma from "../../datasource";
 
 export const findApplication = async (req: Request, res: Response): Promise<void> => {
