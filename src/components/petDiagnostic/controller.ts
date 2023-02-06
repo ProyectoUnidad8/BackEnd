@@ -3,7 +3,7 @@ import prisma from "../../datasource";
 
 export const findAllPetDiagnostic = async (req:Request, res:Response): Promise<void> => {
     try {
-        const data = await prisma.diagnostic.findMany();
+        const data = await prisma.diagnostic.findMany({ include: { pet: true } });
 
         res.status(200).json({
             ok: true,
@@ -24,7 +24,8 @@ export const findOnePetDiagnostic = async (req:Request, res:Response):Promise<vo
         const data = await prisma.diagnostic.findFirst({
             where: {
                 id: Number(id)
-            }
+            },
+            include: { pet: true }
         });
         res.status(200).json({
             ok: true,
