@@ -117,7 +117,7 @@ export const login = async (req:Request, res: Response): Promise<void> => {
                 expiresIn: "2h",
             });
 
-        res.status(201).json({ usuario, token });
+        res.status(201).json({ usuario, role, token });
 
 	} catch (error) {
 		res.status(500).json({
