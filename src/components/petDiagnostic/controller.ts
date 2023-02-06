@@ -46,9 +46,8 @@ export const findAllByPetDiagnostic = async (req:Request, res:Response):Promise<
 
         const data = await prisma.diagnostic.findMany({
             where: {
-                id: Number(id)
+                petId: Number(id)
             },
-            include: { pet: true }
         });
         res.status(200).json({
             ok: true,
