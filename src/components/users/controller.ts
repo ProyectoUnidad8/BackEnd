@@ -112,10 +112,10 @@ export const login = async (req:Request, res: Response): Promise<void> => {
             { email, password }, 
             process.env.TOKEN_SECRET as Secret,
             {
-                expiresIn: "1h",
+                expiresIn: "2h",
             });
 
-        res.status(201).json({ email, token });
+        res.status(201).json({ usuario, token });
 
 	} catch (error) {
 		res.status(500).json({
