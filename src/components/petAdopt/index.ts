@@ -1,6 +1,5 @@
 import { Router } from "express";
 import * as petAdoptionController from "./controller";
-import { validateAuthorization } from "../../middleware";
 
 const petAdoptionRouter = Router();
 
