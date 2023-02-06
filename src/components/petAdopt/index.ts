@@ -4,10 +4,10 @@ import { validateAuthorization } from "../../middleware";
 
 const petAdoptionRouter = Router();
 
-petAdoptionRouter.get("/", validateAuthorization, petAdoptionController.findAllPetToAdopt);
-petAdoptionRouter.get("/:id", validateAuthorization, petAdoptionController.findOnePetToAdopt);
-petAdoptionRouter.post("/", validateAuthorization, petAdoptionController.storePetToAdopt);
-petAdoptionRouter.put("/:id", validateAuthorization, petAdoptionController.updatePetToAdopt);
-petAdoptionRouter.delete("/:id", validateAuthorization, petAdoptionController.deletePetToAdopt);
+petAdoptionRouter.get("/", petAdoptionController.findAllPetToAdopt);
+petAdoptionRouter.get("/:id", petAdoptionController.findOnePetToAdopt);
+petAdoptionRouter.post("/", petAdoptionController.storePetToAdopt);
+petAdoptionRouter.put("/:id", petAdoptionController.updatePetToAdopt);
+petAdoptionRouter.delete("/:id", petAdoptionController.deletePetToAdopt);
 
 export default petAdoptionRouter;
