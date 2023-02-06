@@ -21,7 +21,7 @@ export const findOnePetDiagnostic = async (req:Request, res:Response):Promise<vo
     try {
         const { id } = req.params;
 
-        const data = await prisma.diagnostic.findFirst({
+        const data = await prisma.diagnostic.findMany({
             where: {
                 id: Number(id)
             },
