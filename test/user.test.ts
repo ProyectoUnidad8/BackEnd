@@ -15,8 +15,6 @@ beforeAll(async() => {
   token = response.body.token;
 });
 
-// 
-
 describe('Test for /api/v1/user', () => {
 
   it('should respond a 201 when login', async () => {
