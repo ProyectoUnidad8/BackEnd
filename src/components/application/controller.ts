@@ -1,6 +1,8 @@
 import { type Request, Response } from "express"; 
 import prisma from "../../datasource";
 
+import { TwilioSendSMS } from "../../services"; 
+
 export const findApplication = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
@@ -46,10 +48,12 @@ export const addApplication = async (req : Request, res: Response): Promise<void
         await prisma.application.create({
             data
         });
+        const sms = await TwilioSendSMS(data.name, data.phone ,String(process.env.MY_PHONE_NUMBER))
 
         res.status(201).json({
             ok:true,
-            message: "Solicitud creada correctamente"
+            message: "Solicitud creada correctamente",
+            sms
         })
     } catch (error) {
         console.log(error);
