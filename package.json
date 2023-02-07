@@ -26,7 +26,8 @@
     "cors": "2.8.5",
     "dotenv": "16.0.3",
     "express": "4.18.2",
-    "jsonwebtoken": "9.0.0"
+    "jsonwebtoken": "9.0.0",
+    "twilio": "4.7.1"
   },
   "devDependencies": {
     "@babel/core": "7.20.12",
