@@ -4,11 +4,11 @@ import prisma from "../../datasource";
 export const findUserPets = async (req: Request, res: Response): Promise<void> => {
 
     try {
-        const { id } = req.body;
+        const { id } = req.params;
 
         const result = await prisma.pet.findMany({
             where: {
-                ownerId: id
+                ownerId: Number(id)
             }
         });
 
