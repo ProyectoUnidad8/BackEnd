@@ -11,6 +11,10 @@ env:
   SHADOW_DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL }}
   PORT: ${{ secrets.PORT }}
   TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
+  TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+  TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+  TWILIO_PHONE_NUMBER: ${{ secrets.TWILIO_PHONE_NUMBER }}
+  MY_PHONE_NUMBER: ${{ secrets.MY_PHONE_NUMBER }}
 
 jobs:
   build:
@@ -19,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16.x,]
 
     steps:
     - uses: actions/checkout@v3
