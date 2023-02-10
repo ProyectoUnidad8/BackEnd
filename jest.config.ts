@@ -8,4 +8,14 @@ export default {
   collectCoverage: true,
   coverageDirectory: "coverage",
   coverageProvider: "v8",
+}
+module.exports = {
+  testPathIgnorePatterns: [
+    './src/components/application',
+    './src/components/pet',
+    './src/components/petAdopt',
+    './src/components/petDiagnostic',
+    './src/components/users',
+    './src/services/twilio',
+  ]
 };

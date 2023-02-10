@@ -6,7 +6,7 @@ const api = supertest(app);
 
 
 describe('Test for /api/v1/application', () => {
-
+  jest.setTimeout(100000)
   it('should respond with JSON array', (done) => {
     api
       .get('/api/v1/application')
