@@ -11,6 +11,11 @@ export default {
 }
 module.exports = {
   testPathIgnorePatterns: [
-    './src/',
+    './src/components/application',
+    './src/components/pet',
+    './src/components/petAdopt',
+    './src/components/petDiagnostic',
+    './src/components/users',
+    './src/services/twilio',
   ]
 };
