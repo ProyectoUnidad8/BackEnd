@@ -1,17 +1,18 @@
 import { type Request, Response } from "express"; 
 import prisma from "../../datasource";
+import { TwilioSendSMS } from "../../services"; 
 
 export const findApplication = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
 
-        const application = await prisma.application.findUnique({
+        const result = await prisma.application.findUnique({
             where: {id: Number(id)}
         });
 
         res.status(200).json({
             ok: true,
-            data: application,
+            data: result,
         });
         
     } catch (error) {
@@ -22,13 +23,13 @@ export const findApplication = async (req: Request, res: Response): Promise<void
     }
 };
 
-export const findAllApplication = async (req: Request, res: Response): Promise<void> => {
+export const findAllApplication = async (_req: Request, res: Response): Promise<void> => {
     try {
-        const applications = await prisma.application.findMany();
+        const result = await prisma.application.findMany();
 
         res.status(200).json({
             ok: true,
-            data: applications,
+            data: result,
         });
         
     } catch (error) {
@@ -41,16 +42,30 @@ export const findAllApplication = async (req: Request, res: Response): Promise<v
 
 export const addApplication = async (req : Request, res: Response): Promise<void> => {
     try {
+
         const data = req.body;
+        const sms = await TwilioSendSMS(data.name, data.phone)
+        
+        if (!sms.status){
+            res.status(401).json({
+                ok: false,
+                message: "Ha ocurrido un error con el servicio de Twilio",
+                sms
+              });
+            }
+        else {
+            await prisma.application.create({
+                data
+            });
+            
+            res.status(201).json({
+                ok:true,
+                message: "Solicitud creada correctamente",
+                sms
+            });
+        }
+       
 
-        await prisma.application.create({
-            data
-        });
-
-        res.status(201).json({
-            ok:true,
-            message: "Solicitud creada correctamente"
-        })
     } catch (error) {
         console.log(error);
         res.status(500).json({

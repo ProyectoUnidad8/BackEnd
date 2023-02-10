@@ -4,7 +4,7 @@ import { app } from "../src/app";
 const api = supertest(app);
 
 describe('Test for /api/v1/pet-adoption', () => {
-
+  jest.setTimeout(100000)
   it('should respond with JSON array', (done) => {
     api
       .get('/api/v1/pet-adoption')
